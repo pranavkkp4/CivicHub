@@ -1,0 +1,23 @@
+# Dependencies and build output
+app/node_modules/
+app/dist/
+
+# Local backend/runtime artifacts
+app/backend/*.db
+app/backend/*.log
+app/backend/uploads/
+app/backend/__pycache__/
+app/backend/app/**/__pycache__/
+
+# Local environment files
+app/backend/.env
+
+# Archives (requested exclusions)
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Local packaged artifacts
+zirRpMsf
+zirTkUnR
