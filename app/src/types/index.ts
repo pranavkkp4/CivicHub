@@ -47,6 +47,25 @@ export interface Flashcard {
   difficulty: string;
 }
 
+export interface InterviewQuestion {
+  id: number;
+  question: string;
+  order_index: number;
+}
+
+export interface InterviewStartResponse {
+  session_id: number;
+  questions: InterviewQuestion[];
+}
+
+export interface InterviewAnswerResult {
+  score: number;
+  feedback: string;
+  improved_answer: string;
+  strengths: string[];
+  areas_for_improvement: string[];
+}
+
 export interface MockTest {
   id: number;
   title: string;

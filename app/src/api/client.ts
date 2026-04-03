@@ -13,56 +13,49 @@ class ApiClient {
       },
     });
 
-    // Request interceptor to add auth token
-    this.client.interceptors.request.use(
-      (config) => {
-        const token = localStorage.getItem('access_token');
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-      },
-      (error) => Promise.reject(error)
-    );
-
-    // Response interceptor for error handling
     this.client.interceptors.response.use(
       (response) => response,
-      (error: AxiosError) => {
-        if (error.response?.status === 401) {
-          localStorage.removeItem('access_token');
-          window.location.href = '/login';
-        }
-        return Promise.reject(error);
-      }
+      (error: AxiosError) => Promise.reject(error)
     );
   }
 
   // Auth
   async login(email: string, password: string) {
-    const formData = new FormData();
-    formData.append('username', email);
-    formData.append('password', password);
-    
-    const response = await this.client.post('/auth/login', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return response.data;
+    void email;
+    void password;
+    return {
+      access_token: 'demo-access-token',
+      token_type: 'bearer',
+    };
   }
 
   async register(email: string, password: string, firstName?: string, lastName?: string) {
-    const response = await this.client.post('/auth/register', {
-      email,
-      password,
-      first_name: firstName,
-      last_name: lastName,
-    });
-    return response.data;
+    void email;
+    void password;
+    void firstName;
+    void lastName;
+    return {
+      access_token: 'demo-access-token',
+      token_type: 'bearer',
+    };
   }
 
   async getMe() {
-    const response = await this.client.get('/auth/me');
-    return response.data;
+    return {
+      id: 0,
+      email: 'demo@civichub.app',
+      first_name: 'Demo',
+      last_name: 'User',
+      is_active: true,
+      created_at: new Date().toISOString(),
+      roles: [
+        {
+          id: 0,
+          name: 'student',
+          description: 'Demo access role',
+        },
+      ],
+    };
   }
 
   // Dashboard
@@ -82,15 +75,30 @@ class ApiClient {
     return response.data;
   }
 
+  async getFlashcards(materialId: number) {
+    const response = await this.client.get(`/education/materials/${materialId}/flashcards`);
+    return response.data;
+  }
+
   async generateFlashcards(materialId: number, count: number = 10) {
-    const response = await this.client.post(`/education/materials/${materialId}/flashcards`, { count });
+    const response = await this.client.post(`/education/materials/${materialId}/flashcards`, {
+      study_material_id: materialId,
+      count,
+    });
+    return response.data;
+  }
+
+  async getMockTests(materialId: number) {
+    const response = await this.client.get(`/education/materials/${materialId}/mock-tests`);
     return response.data;
   }
 
   async generateMockTest(materialId: number, questionCount: number = 10) {
     const response = await this.client.post(`/education/materials/${materialId}/mock-test`, {
+      title: 'Practice Test',
       study_material_id: materialId,
       question_count: questionCount,
+      difficulty: 'medium',
     });
     return response.data;
   }
@@ -102,6 +110,17 @@ class ApiClient {
 
   async getWeakTopics() {
     const response = await this.client.get('/education/weak-topics');
+    return response.data;
+  }
+
+  async sendEducationEmail(data: {
+    recipient_email: string;
+    subject: string;
+    content: string;
+    email_type: string;
+    source_page?: string;
+  }) {
+    const response = await this.client.post('/email/send', data);
     return response.data;
   }
 
@@ -216,12 +235,40 @@ class ApiClient {
   }
 
   async runWellnessAgent(currentPage?: string) {
-    const response = await this.client.post('/agents/wellness/run', { current_page: currentPage });
+    const response = await this.client.post('/agents/wellness/run', {
+      current_page: currentPage,
+    });
     return response.data;
   }
 
   async runSustainabilityAgent(currentPage?: string) {
-    const response = await this.client.post('/agents/sustainability/run', { current_page: currentPage });
+    const response = await this.client.post('/agents/sustainability/run', {
+      current_page: currentPage,
+    });
+    return response.data;
+  }
+
+  async startInterview(data: {
+    topic: string;
+    difficulty?: string;
+    question_count?: number;
+    study_material_id?: number;
+  }) {
+    const response = await this.client.post('/education/interview/start', data);
+    return response.data;
+  }
+
+  async startInterviewSession(data: {
+    topic: string;
+    difficulty?: string;
+    question_count?: number;
+    study_material_id?: number;
+  }) {
+    return this.startInterview(data);
+  }
+
+  async submitInterviewAnswer(responseId: number, answer: string) {
+    const response = await this.client.post(`/education/interview/${responseId}/answer`, { answer });
     return response.data;
   }
 

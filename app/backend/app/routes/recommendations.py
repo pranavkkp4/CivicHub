@@ -43,7 +43,8 @@ async def generate_recommendations(
         user_id=current_user.id,
         db=db
     )
-    return {"message": f"Generated {len(recommendations)} recommendations", "recommendations": recommendations}
+    serialized = [RecommendationResponse.model_validate(rec).model_dump() for rec in recommendations]
+    return {"message": f"Generated {len(serialized)} recommendations", "recommendations": serialized}
 
 
 @router.post("/", response_model=RecommendationResponse)

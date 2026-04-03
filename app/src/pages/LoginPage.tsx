@@ -54,7 +54,7 @@ export default function LoginPage() {
     <AuthShell
       eyebrow="Return To Mission Control"
       title="Sign in and pick up where your impact left off."
-      description="Impact OS brings your learning, wellness, sustainability, and accessibility workflows into one measured system."
+      description="Civic Hub brings your learning, wellness, sustainability, and accessibility workflows into one measured system."
       highlights={loginHighlights}
       footer={
         <p>

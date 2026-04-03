@@ -1,8 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from typing import List, Optional
+import logging
 import shutil
 import os
+from datetime import datetime
 
 from ..core.database import get_db
 from ..core.config import get_settings
@@ -26,6 +29,70 @@ from ..services.file_service import file_service
 
 router = APIRouter(prefix="/education", tags=["Education"])
 settings = get_settings()
+logger = logging.getLogger(__name__)
+PLACEHOLDER_TEST_QUESTION = "What is one key concept from the material?"
+PLACEHOLDER_TEST_OPTION = "A detail that matches the topic"
+
+def _question_has_real_content(question_text: str, options: List[str], correct_answer: str) -> bool:
+    looks_like_placeholder = (
+        question_text == PLACEHOLDER_TEST_QUESTION
+        and PLACEHOLDER_TEST_OPTION in options
+    )
+    return bool(question_text and correct_answer and len(options) >= 4 and correct_answer in options and not looks_like_placeholder)
+
+
+def _get_valid_generated_questions(test_data: dict) -> List[dict]:
+    valid_questions: List[dict] = []
+    for raw_question in test_data.get("questions", []):
+        if not isinstance(raw_question, dict):
+            continue
+
+        question_text = str(raw_question.get("question_text", "")).strip()
+        options = [
+            str(option).strip()
+            for option in raw_question.get("options", [])
+            if str(option).strip()
+        ] if isinstance(raw_question.get("options"), list) else []
+        correct_answer = str(raw_question.get("correct_answer", "")).strip()
+
+        if not _question_has_real_content(question_text, options, correct_answer):
+            continue
+
+        valid_questions.append({
+            **raw_question,
+            "question_text": question_text,
+            "options": options,
+            "correct_answer": correct_answer,
+        })
+
+    return valid_questions
+
+
+def _mock_test_has_real_questions(mock_test: MockTest) -> bool:
+    for question in mock_test.questions:
+        question_text = (question.question_text or "").strip()
+        options = [
+            option.strip()
+            for option in (question.options or [])
+            if isinstance(option, str) and option.strip()
+        ]
+        correct_answer = (question.correct_answer or "").strip()
+        if _question_has_real_content(question_text, options, correct_answer):
+            return True
+
+    return False
+
+
+def _get_latest_saved_mock_test(db: Session, material_id: int) -> Optional[MockTest]:
+    saved_tests = db.query(MockTest).filter(
+        MockTest.study_material_id == material_id
+    ).order_by(MockTest.created_at.desc()).all()
+
+    for saved_test in saved_tests:
+        if _mock_test_has_real_questions(saved_test):
+            return saved_test
+
+    return None
 
 
 # Study Materials
@@ -254,18 +321,40 @@ async def generate_mock_test(
     if not material:
         raise HTTPException(status_code=404, detail="Study material not found")
     
-    test_data = await study_service.generate_mock_test(
-        material.content,
-        question_count=request.question_count,
-        difficulty=request.difficulty
-    )
+    requested_question_count = max(request.question_count, 1)
+    latest_saved_test = _get_latest_saved_mock_test(db, material_id)
+
+    try:
+        test_data = await study_service.generate_mock_test(
+            material.content,
+            question_count=requested_question_count,
+            difficulty=request.difficulty
+        )
+    except Exception as exc:
+        logger.warning("Mock test generation failed for material %s: %s", material_id, exc)
+        if latest_saved_test:
+            return latest_saved_test
+        raise HTTPException(
+            status_code=503,
+            detail="Civic Hub could not generate a new quiz right now, and there is no saved quiz for this material yet."
+        ) from exc
+
+    valid_questions = _get_valid_generated_questions(test_data)
+    minimum_questions = max(1, min(requested_question_count, 3))
+    if len(valid_questions) < minimum_questions:
+        if latest_saved_test:
+            return latest_saved_test
+        raise HTTPException(
+            status_code=503,
+            detail="Civic Hub could not generate a usable quiz right now, and there is no saved quiz for this material yet."
+        )
     
     mock_test = MockTest(
         study_material_id=material_id,
         title=test_data.get("title", "Mock Test"),
         description=test_data.get("description", ""),
         time_limit_minutes=request.time_limit_minutes or 30,
-        total_questions=len(test_data.get("questions", [])),
+        total_questions=len(valid_questions),
         difficulty=request.difficulty
     )
     db.add(mock_test)
@@ -273,7 +362,7 @@ async def generate_mock_test(
     db.refresh(mock_test)
     
     # Add questions
-    for idx, q_data in enumerate(test_data.get("questions", [])):
+    for idx, q_data in enumerate(valid_questions):
         question = MockTestQuestion(
             mock_test_id=mock_test.id,
             question_text=q_data.get("question_text", ""),
@@ -290,6 +379,26 @@ async def generate_mock_test(
     db.commit()
     db.refresh(mock_test)
     return mock_test
+
+
+@router.get("/materials/{material_id}/mock-tests", response_model=List[MockTestResponse])
+async def get_mock_tests_for_material(
+    material_id: int,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Get saved mock tests for a study material."""
+    material = db.query(StudyMaterial).filter(
+        StudyMaterial.id == material_id,
+        StudyMaterial.user_id == current_user.id
+    ).first()
+
+    if not material:
+        raise HTTPException(status_code=404, detail="Study material not found")
+
+    return db.query(MockTest).filter(
+        MockTest.study_material_id == material_id
+    ).order_by(MockTest.created_at.desc()).all()
 
 
 @router.post("/mock-tests/{test_id}/submit", response_model=MockTestResult)

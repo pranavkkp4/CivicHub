@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
-import ImpactMark from './ImpactMark';
+import CivicHubMark from './CivicHubMark';
 
 interface AuthShellProps {
   eyebrow: string;
@@ -41,7 +41,7 @@ export default function AuthShell({
             </Link>
 
             <div className="mt-8">
-              <ImpactMark />
+              <CivicHubMark />
             </div>
 
             <div className="mt-12 max-w-xl">

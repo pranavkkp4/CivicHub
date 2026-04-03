@@ -90,7 +90,7 @@ export default function RegisterPage() {
         <div>
           <p className="section-kicker">Create Account</p>
           <h2 className="mt-3 text-3xl font-serif tracking-[-0.04em] text-kaleo-charcoal">
-            Launch Impact OS
+            Launch Civic Hub
           </h2>
           <p className="mt-3 max-w-md text-sm leading-6 text-kaleo-charcoal/60">
             Set up your profile once and manage learning, health, sustainability, and accessibility from a single interface.

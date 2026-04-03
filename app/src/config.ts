@@ -1,4 +1,4 @@
-// Impact OS - Mission-led AI operating layer
+// Civic Hub - Mission-led AI operating layer
 // Site-wide configuration
 
 export interface SiteConfig {
@@ -9,8 +9,8 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   language: "en",
-  siteName: "Impact OS",
-  siteDescription: "Impact OS helps study materials become drills, wellness goals become routines, eco actions become momentum, and accessibility becomes clear action.",
+  siteName: "Civic Hub",
+  siteDescription: "Civic Hub helps study materials become drills, wellness goals become routines, eco actions become momentum, and accessibility becomes clear action.",
 };
 
 // Hero Section
@@ -23,8 +23,8 @@ export interface HeroConfig {
 
 export const heroConfig: HeroConfig = {
   backgroundImage: "/hero-bg.jpg",
-  backgroundAlt: "Impact OS mission overview",
-  title: "Impact OS",
+  backgroundAlt: "Civic Hub mission overview",
+  title: "Civic Hub",
   subtitle: "A calm operating layer for meaningful progress",
 };
 
@@ -112,10 +112,10 @@ export interface BreathSectionConfig {
 
 export const breathSectionConfig: BreathSectionConfig = {
   backgroundImage: "/breath-section.jpg",
-  backgroundAlt: "Impact OS in use",
+  backgroundAlt: "Civic Hub in use",
   title: "Structured AI workflows",
   subtitle: "BUILT FOR FOLLOW-THROUGH",
-  description: "Impact OS uses domain-specific agents to produce drills, routines, eco actions, and accessible text that can be reviewed, reused, and improved over time.",
+  description: "Civic Hub uses domain-specific agents to produce drills, routines, eco actions, and accessible text that can be reviewed, reused, and improved over time.",
 };
 
 // Card Stack Section
@@ -190,25 +190,25 @@ export interface FooterConfig {
 
 export const footerConfig: FooterConfig = {
   heading: "Ready to build a system that helps people follow through?",
-  description: "Impact OS turns studying, wellness, sustainability, and accessibility into practical workflows that are easier to return to every day.",
+  description: "Civic Hub turns studying, wellness, sustainability, and accessibility into practical workflows that are easier to return to every day.",
   ctaText: "Get Started",
   contact: [
     {
       type: "email",
-      label: "hello@impactos.ai",
-      value: "hello@impactos.ai",
-      href: "mailto:hello@impactos.ai",
+      label: "hello@civichub.app",
+      value: "hello@civichub.app",
+      href: "mailto:hello@civichub.app",
     },
   ],
   locationLabel: "Built with purpose",
-  address: ["Impact OS Platform", "Practical AI for everyday progress"],
+  address: ["Civic Hub Platform", "Practical AI for everyday progress"],
   socialLabel: "Connect",
   socials: [
-    { platform: "github", href: "https://github.com/impactos" },
-    { platform: "twitter", href: "https://twitter.com/impactos" },
+    { platform: "github", href: "https://github.com/civichub" },
+    { platform: "twitter", href: "https://x.com/civichubapp" },
   ],
-  logoText: "Impact OS",
-  copyright: "2025 Impact OS. Built for learning, wellness, sustainability, and accessibility.",
+  logoText: "Civic Hub",
+  copyright: "2025 Civic Hub. Built for learning, wellness, sustainability, and accessibility.",
   links: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },

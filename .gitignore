@@ -10,7 +10,11 @@ app/backend/__pycache__/
 app/backend/app/**/__pycache__/
 
 # Local environment files
-app/backend/.env
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample
+!**/.env.template
 
 # Archives (requested exclusions)
 *.zip
@@ -21,3 +25,8 @@ app/backend/.env
 # Local packaged artifacts
 zirRpMsf
 zirTkUnR
+
+# Local logs
+*.log
+*.err.log
+*.out.log

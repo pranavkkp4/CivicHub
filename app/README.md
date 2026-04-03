@@ -1,228 +1,157 @@
-# Impact OS - AI Platform for Social Good
+# Civic Hub
 
-A full-stack, AI-powered platform combining education, wellness, sustainability, and accessibility tools through specialized domain agents and structured AI workflows.
+Civic Hub is a full-stack AI application for social-good workflows. It combines a React frontend with a FastAPI backend and currently focuses its main routed user experience on education features such as study materials, flashcards, mock tests, weak-topic review, interview-prep content, and a handwritten digit recognizer.
 
-![Impact OS](https://img.shields.io/badge/Impact%20OS-AI%20Platform-blue)
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688?logo=fastapi)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)
+The repository root is `../`, and the main git root README lives at [../README.md](../README.md). This file is the detailed app-level guide for the code inside `app/`.
 
-## Overview
+## What The Project Does
 
-Impact OS is a production-style AI platform that uses specialized domain agents and structured AI pipelines to transform uploaded content, generate personalized plans, track user activity, and surface actionable insights across learning, health, sustainability, and accessibility.
+Civic Hub is designed to turn user input into practical follow-through:
 
-Unlike generic chatbot platforms, Impact OS features:
-- **Structured AI Workflows**: Purpose-built AI pipelines for specific tasks
-- **Specialized Domain Agents**: Education, Wellness, Sustainability, and Accessibility agents
-- **Cross-Module Recommendations**: Personalized suggestions based on activity across all modules
-- **Persistent Generated Content**: All AI-generated artifacts are saved and retrievable
+- Education: save study material, generate flashcards and mock tests, surface weak topics, draft interview-prep content, and email generated study artifacts
+- Healthcare and wellness: backend routes exist for assessments, workout plans, nutrition plans, symptom checks, and daily wellness summaries
+- Sustainability: backend routes exist for eco logging, challenges, recycling/trivia flows, coaching, events, and leaderboards
+- Accessibility: backend routes exist for simplification, translation, summarization, read-assist, voice-command, and accessibility-profile workflows
 
-## Architecture
+## Current Implementation Status
 
-### Tech Stack
+- The main frontend router currently redirects `/` to `/education`
+- The active frontend navigation is education-first
+- Additional domain pages exist in `src/pages`, but they are not the primary routed experience in `src/App.tsx` right now
+- The backend includes all major module routers: auth, dashboard, notifications, recommendations, education, healthcare, sustainability, accessibility, agents, ML, admin, and email
+- The frontend auth experience is demo-oriented today, and the backend auto-creates a demo user when requests arrive without a valid bearer token
+- Database tables are created on startup through SQLAlchemy metadata; there is no checked-in Alembic migration flow wired up in this repo yet
 
-**Frontend:**
-- React 18 + TypeScript
-- Vite for build tooling
-- Tailwind CSS for styling
-- React Router for navigation
-- GSAP for animations
-- shadcn/ui components
+## Tech Stack
 
-**Backend:**
-- FastAPI (Python)
-- SQLAlchemy ORM
-- Pydantic for validation
-- JWT authentication
-- PostgreSQL database
+### Frontend
 
-**AI/ML:**
-- Gemini API for text generation
-- scikit-learn for ML demos (digit recognition)
-- Structured output schemas for consistent results
+- React 19
+- TypeScript 5
+- Vite 7
+- React Router 6
+- Tailwind CSS 3
+- shadcn/ui and Radix UI primitives
+- Axios for API calls
+- GSAP with ScrollTrigger
+- Lenis for smooth scrolling
+- Lucide React icons
+- Recharts for data visualizations
+- React Hook Form and Zod
 
-### Project Structure
+### Backend
 
-```
+- FastAPI
+- SQLAlchemy 2
+- Pydantic 2 and pydantic-settings
+- Python-JOSE for JWT handling
+- Passlib and bcrypt for password hashing
+- httpx for outbound API calls
+- Resend email integration
+
+### AI And ML
+
+- Gemini API integration
+- Kimi API integration through a lightweight router
+- Built-in fallback responses when AI keys are missing
+- scikit-learn digit classification demo
+- Pillow and NumPy for image preprocessing
+
+## Project Structure
+
+```text
 app/
-├── backend/              # FastAPI backend
-│   ├── app/
-│   │   ├── core/         # Config, database, security
-│   │   ├── models/       # SQLAlchemy models
-│   │   ├── schemas/      # Pydantic schemas
-│   │   ├── routes/       # API endpoints
-│   │   ├── services/     # Business logic & AI services
-│   │   └── main.py       # Application entry point
-│   └── requirements.txt
-├── src/                  # React frontend
-│   ├── api/              # API client
-│   ├── components/       # React components
-│   ├── context/          # React context (Auth)
-│   ├── pages/            # Page components
-│   ├── types/            # TypeScript types
-│   └── config.ts         # Site configuration
-└── dist/                 # Built frontend
+  backend/
+    app/
+      core/            Config, database, security
+      models/          SQLAlchemy models
+      routes/          FastAPI route modules
+      schemas/         Pydantic request/response models
+      services/        AI, email, file, and recommendation services
+      main.py          FastAPI entry point
+    requirements.txt
+  src/
+    api/               Frontend API client
+    components/        Shared and education-specific UI
+    context/           Demo auth context
+    hooks/             Frontend hooks
+    pages/             Routed pages and module views
+    sections/          Marketing/editorial sections from the earlier site shell
+    types/             Shared TypeScript types
+    App.tsx            Main frontend router
 ```
 
-## Features
+## Running Locally
 
-### Education Module
-- **Study Materials**: Upload and manage study content
-- **Flashcards**: AI-generated flashcards from any material
-- **Mock Tests**: Generate practice tests with scoring
-- **Interview Practice**: AI-driven interview simulations with feedback
-- **Weak Topics**: Track and focus on areas needing improvement
-- **Digit Recognizer**: ML demo using scikit-learn
+### Frontend
 
-### Healthcare Module
-- **Workout Planner**: Personalized workout plans based on goals
-- **Nutrition Planner**: Customized meal plans with shopping lists
-- **Symptom Checker**: AI wellness guidance (with medical disclaimer)
-- **Wellness History**: Track your health journey
-
-### Sustainability Module
-- **Eco Tracker**: Log sustainable actions and measure impact
-- **Eco Coach**: Personalized eco tips and recommendations
-- **Eco Trivia**: Test your environmental knowledge
-- **Recycling Game**: Learn proper waste sorting
-- **Leaderboard**: Compete with other users
-
-### Accessibility Module
-- **Text Simplifier**: Reduce text complexity
-- **Translator**: Translate between 12+ languages
-- **Summarizer**: Condense long texts
-- **Read Assist**: Enhanced reading with key term highlights
-
-### Platform Features
-- **Specialized AI Agents**: Domain-aware agents for each module
-- **Recommendation Engine**: Cross-module personalized suggestions
-- **Notification System**: Stay updated on your progress
-- **Activity Tracking**: Comprehensive activity history
-- **Role-Based Access**: Student, teacher, admin roles
-
-## Getting Started
-
-### Prerequisites
-- Node.js 18+
-- Python 3.9+
-- PostgreSQL (or SQLite for development)
-
-### Frontend Setup
+From `app/`:
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
-
-# Build for production
-npm run build
 ```
 
-### Backend Setup
+Optional frontend environment variable:
+
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+If `VITE_API_URL` is not set, the frontend uses `http://localhost:8000`.
+
+### Backend
+
+From `app/backend/`:
 
 ```bash
-# Navigate to backend directory
-cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
-
-# Set environment variables
-cp .env.example .env
-# Edit .env with your configuration
-
-# Run migrations
-alembic upgrade head
-
-# Start the server
 uvicorn app.main:app --reload
 ```
 
-### Environment Variables
+The backend serves API docs at:
 
-Create a `.env` file in the backend directory:
+- `http://localhost:8000/docs`
+- `http://localhost:8000/redoc`
+
+## Backend Environment Variables
+
+Create `app/backend/.env` if you want to override defaults:
 
 ```env
-# Database
-DATABASE_URL=postgresql://user:password@localhost/impactos
-
-# Security
-SECRET_KEY=your-secret-key-here
-
-# AI APIs
-GEMINI_API_KEY=your-gemini-api-key
-
-# Email (optional)
-RESEND_API_KEY=your-resend-api-key
+APP_NAME=Civic Hub
+DEBUG=true
+DATABASE_URL=sqlite:///./civichub.db
+SECRET_KEY=change-me
+GEMINI_API_KEY=
+GEMINI_API_KEY_2=
+GEMINI_API_KEY_3=
+GEMINI_API_KEY_4=
+KIMI_API_KEY=
+RESEND_API_KEY=
+FROM_EMAIL=noreply@civichub.app
 ```
 
-## API Documentation
+Notes:
 
-Once the backend is running, API documentation is available at:
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+- `DATABASE_URL` defaults to PostgreSQL in code, but SQLite is also supported and is usually the easiest local option
+- `GEMINI_API_KEY` is the primary Gemini key, and `GEMINI_API_KEY_2` through `GEMINI_API_KEY_4` can be added as ordered fallbacks
+- `KIMI_API_KEY` is optional; if Gemini and Kimi are both unavailable, some AI flows fall back to built-in demo responses
+- `RESEND_API_KEY` is required only if you want the email-sending features to actually deliver mail
 
-## Key Workflows
+## Education Workflow That Exists Today
 
-### Education Workflow
-1. Upload study material (text or PDF)
-2. Generate flashcards, cheat sheets, or mock tests
-3. Take tests and review weak topics
-4. Practice with interview mode
+1. Add or seed study material in the materials page
+2. Generate flashcards or a mock test from saved material
+3. Review weak topics surfaced from practice results
+4. Open interview prep and email generated study artifacts
+5. Try the digit recognizer demo from the education navigation
 
-### Healthcare Workflow
-1. Create workout or nutrition plan
-2. Specify goals, constraints, and preferences
-3. Receive AI-generated personalized plan
-4. Track progress over time
+## Practical Notes
 
-### Sustainability Workflow
-1. Log eco actions (recycling, energy saving, etc.)
-2. View impact metrics (CO₂ saved, etc.)
-3. Get personalized tips from Eco Coach
-4. Compete on the leaderboard
-
-### Accessibility Workflow
-1. Paste text to transform
-2. Choose transformation type (simplify, translate, summarize)
-3. Get structured output with key points
-4. Copy or save the result
-
-## AI-First Design Principles
-
-Impact OS follows these AI-first principles:
-
-1. **Structured Generation**: Flashcards, tests, plans with consistent formats
-2. **AI Evaluation**: Intelligent feedback on answers and progress
-3. **Text Transformation**: Simplify, translate, summarize on demand
-4. **Cross-Module Recommendations**: Contextual suggestions based on all activity
-5. **Specialized Agents**: Domain-aware agents with memory and context
-
-## Screenshots
-
-*Coming soon*
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Acknowledgments
-
-- Built with [FastAPI](https://fastapi.tiangolo.com/)
-- UI components from [shadcn/ui](https://ui.shadcn.com/)
-- Animations powered by [GSAP](https://greensock.com/gsap/)
-- Icons from [Lucide](https://lucide.dev/)
-
----
-
-**Impact OS** - Technology for Social Good
+- The education UI is the most complete part of the current frontend
+- Auth is intentionally friction-light for local development because of the demo-user fallback
+- The backend is broader than the current frontend routing, so some capabilities are easier to discover through API docs than through the visible navigation
+- `info.md` documents an older site-template setup and should not be treated as the source of truth for the product state

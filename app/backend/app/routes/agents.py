@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import Optional
+from pydantic import BaseModel
 
 from ..core.database import get_db
 from ..routes.auth import get_current_active_user
@@ -14,14 +15,36 @@ from ..services.agent_service import agent_service
 router = APIRouter(prefix="/agents", tags=["AI Agents"])
 
 
+class AgentRunRequest(BaseModel):
+    current_page: Optional[str] = None
+    selected_material_id: Optional[int] = None
+    content_context: Optional[str] = None
+
+
 @router.post("/education/run")
 async def run_education_agent(
-    current_page: Optional[str] = None,
-    selected_material_id: Optional[int] = None,
+    request: AgentRunRequest | None = None,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """Run the education agent for personalized guidance"""
+    request = request or AgentRunRequest()
+    selected_material_context = None
+    if request.selected_material_id is not None:
+        selected_material = db.query(StudyMaterial).filter(
+            StudyMaterial.id == request.selected_material_id,
+            StudyMaterial.user_id == current_user.id
+        ).first()
+
+        if selected_material is not None:
+            selected_material_context = {
+                "id": selected_material.id,
+                "title": selected_material.title,
+                "subject": selected_material.subject,
+                "source_type": selected_material.source_type,
+                "content_preview": selected_material.content[:1200],
+            }
+
     # Gather user context
     study_materials_count = db.query(StudyMaterial).filter(
         StudyMaterial.user_id == current_user.id
@@ -33,7 +56,7 @@ async def run_education_agent(
     
     recent_tests = db.query(MockTestAttempt).filter(
         MockTestAttempt.user_id == current_user.id
-    ).order_by(MockTestAttempt.created_at.desc()).limit(5).all()
+    ).order_by(MockTestAttempt.started_at.desc()).limit(5).all()
     
     recent_activity = db.query(ActivityLog).filter(
         ActivityLog.user_id == current_user.id,
@@ -43,7 +66,8 @@ async def run_education_agent(
     user_context = {
         "study_materials_count": study_materials_count,
         "weak_topics": [wt.topic for wt in weak_topics],
-        "recent_test_scores": [t.percentage for t in recent_tests if t.percentage]
+        "recent_test_scores": [t.percentage for t in recent_tests if t.percentage],
+        "selected_material": selected_material_context,
     }
     
     activity_list = [{"action": a.action, "created_at": a.created_at.isoformat()} for a in recent_activity]
@@ -51,8 +75,8 @@ async def run_education_agent(
     result = await agent_service.run_education_agent(
         user_context=user_context,
         recent_activity=activity_list,
-        current_page=current_page,
-        selected_material_id=selected_material_id
+        current_page=request.current_page,
+        selected_material_id=request.selected_material_id
     )
     
     return result
@@ -60,11 +84,12 @@ async def run_education_agent(
 
 @router.post("/wellness/run")
 async def run_wellness_agent(
-    current_page: Optional[str] = None,
+    request: AgentRunRequest | None = None,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """Run the wellness agent for health guidance"""
+    request = request or AgentRunRequest()
     # Gather user context
     active_plans = []
     
@@ -95,7 +120,7 @@ async def run_wellness_agent(
     result = await agent_service.run_wellness_agent(
         user_context=user_context,
         recent_activity=activity_list,
-        current_page=current_page
+        current_page=request.current_page
     )
     
     return result
@@ -103,11 +128,12 @@ async def run_wellness_agent(
 
 @router.post("/sustainability/run")
 async def run_sustainability_agent(
-    current_page: Optional[str] = None,
+    request: AgentRunRequest | None = None,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """Run the sustainability agent for eco guidance"""
+    request = request or AgentRunRequest()
     # Gather user context
     from sqlalchemy import func
     
@@ -144,7 +170,7 @@ async def run_sustainability_agent(
     result = await agent_service.run_sustainability_agent(
         user_context=user_context,
         recent_logs=logs_list,
-        current_page=current_page
+        current_page=request.current_page
     )
     
     return result
@@ -152,12 +178,12 @@ async def run_sustainability_agent(
 
 @router.post("/accessibility/run")
 async def run_accessibility_agent(
-    current_page: Optional[str] = None,
-    content_context: Optional[str] = None,
+    request: AgentRunRequest | None = None,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """Run the accessibility agent for accessibility guidance"""
+    request = request or AgentRunRequest()
     from ..models.accessibility import AccessibilityTransform
     
     # Get recent transforms
@@ -175,8 +201,8 @@ async def run_accessibility_agent(
     result = await agent_service.run_accessibility_agent(
         user_context=user_context,
         recent_transforms=transforms_list,
-        current_page=current_page,
-        content_context=content_context
+        current_page=request.current_page,
+        content_context=request.content_context
     )
     
     return result

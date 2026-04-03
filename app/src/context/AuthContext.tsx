@@ -1,5 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import apiClient from '../api/client';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { User } from '../types';
 
 interface AuthContextType {
@@ -13,46 +12,42 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const demoUser: User = {
+  id: 0,
+  email: 'demo@civichub.app',
+  first_name: 'Demo',
+  last_name: 'User',
+  is_active: true,
+  created_at: new Date().toISOString(),
+  roles: [
+    {
+      id: 0,
+      name: 'student',
+      description: 'Demo access role',
+    },
+  ],
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Check for existing token on mount
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      fetchUser();
-    } else {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const fetchUser = async () => {
-    try {
-      const userData = await apiClient.getMe();
-      setUser(userData);
-    } catch {
-      localStorage.removeItem('access_token');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const [user, setUser] = useState<User | null>(demoUser);
+  const [isLoading] = useState(false);
 
   const login = async (email: string, password: string) => {
-    const response = await apiClient.login(email, password);
-    localStorage.setItem('access_token', response.access_token);
-    await fetchUser();
+    void email;
+    void password;
+    setUser(demoUser);
   };
 
   const register = async (email: string, password: string, firstName?: string, lastName?: string) => {
-    await apiClient.register(email, password, firstName, lastName);
-    // Auto-login after registration
-    await login(email, password);
+    void email;
+    void password;
+    void firstName;
+    void lastName;
+    setUser(demoUser);
   };
 
   const logout = () => {
-    localStorage.removeItem('access_token');
-    setUser(null);
+    setUser(demoUser);
   };
 
   return (

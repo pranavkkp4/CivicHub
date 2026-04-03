@@ -1,4 +1,4 @@
-# Impact OS Site Notes
+# Civic Hub Site Notes
 
 An editorial, earth-toned single-page website template with premium scroll-driven animations. Features warm organic colors (sand, cream, terracotta, charcoal), serif/sans-serif typography pairing (Cormorant Garamond + Inter), and cinematic GSAP-powered scroll effects.
 

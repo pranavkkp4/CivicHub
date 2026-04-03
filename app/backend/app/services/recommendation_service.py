@@ -96,7 +96,7 @@ class RecommendationService:
         recent_tests = db.query(MockTestAttempt).filter(
             MockTestAttempt.user_id == user_id,
             MockTestAttempt.status == "completed"
-        ).order_by(MockTestAttempt.created_at.desc()).limit(3).all()
+        ).order_by(MockTestAttempt.started_at.desc()).limit(3).all()
         
         if recent_tests and any(t.percentage < 70 for t in recent_tests):
             recommendations.append({

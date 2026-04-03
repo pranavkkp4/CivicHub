@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Instrument+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,300..800&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,57 +6,71 @@
 
 @layer base {
   :root {
-    --background: 35 58% 95%;
-    --foreground: 216 37% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 216 37% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 216 37% 11%;
-    --primary: 216 37% 11%;
-    --primary-foreground: 35 60% 97%;
-    --secondary: 21 53% 51%;
-    --secondary-foreground: 35 60% 97%;
-    --muted: 34 32% 89%;
-    --muted-foreground: 216 18% 38%;
-    --accent: 21 53% 51%;
-    --accent-foreground: 35 60% 97%;
-    --destructive: 0 75% 48%;
-    --destructive-foreground: 35 60% 97%;
-    --border: 216 19% 84%;
-    --input: 216 19% 84%;
-    --ring: 21 53% 51%;
+    --background: 240 20% 6%;
+    --foreground: 252 38% 98%;
+    --card: 231 19% 11%;
+    --card-foreground: 252 38% 98%;
+    --popover: 231 19% 11%;
+    --popover-foreground: 252 38% 98%;
+    --primary: 258 90% 66%;
+    --primary-foreground: 240 20% 6%;
+    --secondary: 0 100% 71%;
+    --secondary-foreground: 252 38% 98%;
+    --muted: 227 24% 15%;
+    --muted-foreground: 224 16% 70%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 240 20% 6%;
+    --destructive: 0 100% 71%;
+    --destructive-foreground: 252 38% 98%;
+    --border: 228 20% 22%;
+    --input: 228 20% 22%;
+    --ring: 258 90% 66%;
     --radius: 1.2rem;
 
-    --kaleo-sand: #f6f0e6;
-    --kaleo-charcoal: #101827;
-    --kaleo-earth: #1a2536;
-    --kaleo-cream: #fbf7f0;
-    --kaleo-terracotta: #c56a43;
-    --kaleo-moss: #5f8a63;
-    --kaleo-sky: #7597a4;
-    --kaleo-gold: #c9993e;
+    --kaleo-background: #0d0d12;
+    --kaleo-surface: #161821;
+    --kaleo-surface-elevated: #1e2230;
+    --kaleo-primary: #8b5cf6;
+    --kaleo-secondary: #ff6b6b;
+    --kaleo-accent: #f59e0b;
+    --kaleo-text: #f8f7fc;
+    --kaleo-muted: #a5adc0;
+    --kaleo-border: #2c3142;
+    --kaleo-sand: #161821;
+    --kaleo-charcoal: #f8f7fc;
+    --kaleo-earth: #8b5cf6;
+    --kaleo-cream: #f8f7fc;
+    --kaleo-terracotta: #ff6b6b;
+    --kaleo-moss: #a5adc0;
+    --kaleo-sky: #8b5cf6;
+    --kaleo-gold: #f59e0b;
+    --kaleo-night: #0d0d12;
+    --kaleo-obsidian: #161821;
+    --kaleo-copper: #ff6b6b;
+    --kaleo-amber: #f59e0b;
+    --kaleo-ember: #ff6b6b;
   }
 
   .dark {
-    --background: 216 37% 11%;
-    --foreground: 35 58% 95%;
-    --card: 216 37% 14%;
-    --card-foreground: 35 58% 95%;
-    --popover: 216 37% 14%;
-    --popover-foreground: 35 58% 95%;
-    --primary: 35 58% 95%;
-    --primary-foreground: 216 37% 11%;
-    --secondary: 21 53% 51%;
-    --secondary-foreground: 35 58% 95%;
-    --muted: 216 26% 18%;
-    --muted-foreground: 35 32% 74%;
-    --accent: 21 53% 51%;
-    --accent-foreground: 35 58% 95%;
-    --destructive: 0 70% 42%;
-    --destructive-foreground: 35 58% 95%;
-    --border: 216 22% 24%;
-    --input: 216 22% 24%;
-    --ring: 21 53% 51%;
+    --background: 240 20% 6%;
+    --foreground: 252 38% 98%;
+    --card: 231 19% 11%;
+    --card-foreground: 252 38% 98%;
+    --popover: 231 19% 11%;
+    --popover-foreground: 252 38% 98%;
+    --primary: 258 90% 66%;
+    --primary-foreground: 240 20% 6%;
+    --secondary: 0 100% 71%;
+    --secondary-foreground: 252 38% 98%;
+    --muted: 227 24% 15%;
+    --muted-foreground: 224 16% 70%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 240 20% 6%;
+    --destructive: 0 100% 71%;
+    --destructive-foreground: 252 38% 98%;
+    --border: 228 20% 22%;
+    --input: 228 20% 22%;
+    --ring: 258 90% 66%;
   }
 
   * {
@@ -70,9 +84,10 @@
   body {
     @apply min-h-screen bg-background font-sans text-foreground antialiased;
     background-image:
-      radial-gradient(circle at top left, rgba(197, 106, 67, 0.14), transparent 30%),
-      radial-gradient(circle at top right, rgba(117, 151, 164, 0.18), transparent 24%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+      radial-gradient(circle at top left, rgba(139, 92, 246, 0.24), transparent 40%),
+      radial-gradient(circle at top right, rgba(255, 107, 107, 0.16), transparent 32%),
+      radial-gradient(circle at 50% 108%, rgba(245, 158, 11, 0.12), transparent 26%),
+      linear-gradient(180deg, rgba(13, 13, 18, 0.98), rgba(13, 13, 18, 1));
     background-attachment: fixed;
     overflow-x: hidden;
   }
@@ -82,7 +97,7 @@
   input,
   textarea,
   select {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-kaleo-terracotta/40 focus-visible:ring-offset-2 focus-visible:ring-offset-kaleo-cream;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-kaleo-earth focus-visible:ring-offset-2 focus-visible:ring-offset-kaleo-night;
   }
 
   h1,
@@ -95,8 +110,8 @@
   }
 
   ::selection {
-    background-color: rgba(197, 106, 67, 0.22);
-    color: #101827;
+    background-color: rgba(139, 92, 246, 0.38);
+    color: #0d0d12;
   }
 }
 
@@ -111,9 +126,9 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)),
-      linear-gradient(rgba(16, 24, 39, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(16, 24, 39, 0.05) 1px, transparent 1px);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+      linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
     background-size: auto, 56px 56px, 56px 56px;
     opacity: 0.55;
     pointer-events: none;
@@ -128,75 +143,82 @@
     width: 32rem;
     height: 32rem;
     border-radius: 9999px;
-    background: radial-gradient(circle, rgba(117, 151, 164, 0.18), transparent 68%);
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.24), transparent 70%);
     filter: blur(56px);
     pointer-events: none;
     z-index: -1;
   }
 
   .impact-panel {
-    @apply rounded-[2rem] border border-kaleo-charcoal/10 bg-white/80 backdrop-blur-xl;
-    box-shadow: 0 28px 80px -48px rgba(16, 24, 39, 0.5);
+    @apply rounded-[2rem] border border-kaleo-border bg-kaleo-surface backdrop-blur-xl;
+    box-shadow:
+      0 28px 80px -48px rgba(0, 0, 0, 0.72),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
   }
 
   .surface-grid {
     background-image:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0)),
-      linear-gradient(rgba(16, 24, 39, 0.048) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(16, 24, 39, 0.048) 1px, transparent 1px);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
     background-size: auto, 28px 28px, 28px 28px;
   }
 
   .section-kicker {
-    @apply text-xs font-semibold uppercase tracking-[0.26em] text-kaleo-charcoal/50;
+    @apply text-xs font-semibold uppercase tracking-[0.26em] text-kaleo-muted;
   }
 
   .impact-chip {
-    @apply inline-flex items-center gap-2 rounded-full border border-kaleo-charcoal/10 bg-white/70 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-kaleo-charcoal/60 backdrop-blur-md;
+    @apply inline-flex items-center gap-2 rounded-full border border-kaleo-border bg-[rgba(255,255,255,0.04)] px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-kaleo-text backdrop-blur-md;
   }
 
   .impact-button {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-kaleo-charcoal px-6 py-3.5 text-sm font-semibold text-white transition duration-300 ease-out;
-    box-shadow: 0 20px 35px -20px rgba(16, 24, 39, 0.68);
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(135deg,#8B5CF6,#FF6B6B)] px-6 py-3.5 text-sm font-semibold text-kaleo-text transition duration-300 ease-out;
+    box-shadow:
+      0 20px 35px -20px rgba(139, 92, 246, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
   }
 
   .impact-button:hover {
     transform: translateY(-2px);
-    background-color: #1a2536;
-    box-shadow: 0 28px 38px -22px rgba(16, 24, 39, 0.7);
+    box-shadow:
+      0 26px 42px -22px rgba(139, 92, 246, 0.45),
+      0 12px 36px -24px rgba(255, 107, 107, 0.5);
   }
 
   .impact-button-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-kaleo-charcoal/10 bg-white/70 px-6 py-3.5 text-sm font-semibold text-kaleo-charcoal transition duration-300 ease-out backdrop-blur-md;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-kaleo-border bg-kaleo-elevated px-6 py-3.5 text-sm font-semibold text-kaleo-text transition duration-300 ease-out backdrop-blur-md;
   }
 
   .impact-button-secondary:hover {
     transform: translateY(-2px);
-    border-color: rgba(16, 24, 39, 0.2);
-    background-color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(139, 92, 246, 0.42);
+    background-color: rgba(255, 255, 255, 0.06);
   }
 
   .signal-card {
-    @apply rounded-[1.75rem] border border-kaleo-charcoal/10 bg-white/75 p-5 backdrop-blur-md;
-    box-shadow: 0 20px 44px -34px rgba(16, 24, 39, 0.46);
+    @apply rounded-[1.75rem] border border-kaleo-border bg-kaleo-surface p-5 backdrop-blur-md;
+    box-shadow:
+      0 20px 44px -34px rgba(0, 0, 0, 0.58),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
   }
 
   .data-label {
-    @apply text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-kaleo-charcoal/40;
+    @apply text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-kaleo-muted;
   }
 
   .data-value {
-    @apply mt-2 font-serif text-3xl tracking-[-0.04em] text-kaleo-charcoal;
+    @apply mt-2 font-serif text-3xl tracking-[-0.04em] text-kaleo-text;
   }
 
   .orbital-map {
     position: relative;
     min-height: 27rem;
     border-radius: 1.8rem;
-    border: 1px solid rgba(16, 24, 39, 0.08);
+    border: 1px solid rgba(44, 49, 66, 0.9);
     background:
-      radial-gradient(circle at center, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.58)),
-      linear-gradient(135deg, rgba(197, 106, 67, 0.06), rgba(117, 151, 164, 0.14));
+      radial-gradient(circle at center, rgba(30, 34, 48, 0.96), rgba(13, 13, 18, 0.98)),
+      linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(255, 107, 107, 0.12));
     overflow: hidden;
   }
 
@@ -206,7 +228,7 @@
     position: absolute;
     inset: 13%;
     border-radius: 9999px;
-    border: 1px dashed rgba(16, 24, 39, 0.16);
+    border: 1px dashed rgba(165, 173, 192, 0.18);
   }
 
   .orbital-map::after {
@@ -222,36 +244,99 @@
     gap: 0.35rem;
     max-width: 10rem;
     border-radius: 1.3rem;
-    border: 1px solid rgba(16, 24, 39, 0.08);
-    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(44, 49, 66, 0.95);
+    background: rgba(22, 24, 33, 0.9);
     padding: 0.8rem 0.95rem;
-    box-shadow: 0 22px 36px -28px rgba(16, 24, 39, 0.5);
+    box-shadow: 0 22px 36px -28px rgba(0, 0, 0, 0.62);
     backdrop-filter: blur(18px);
   }
 
   .orbit-node .orbit-title {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-kaleo-charcoal/50;
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-kaleo-muted;
   }
 
   .orbit-node .orbit-body {
-    @apply text-sm font-medium leading-5 text-kaleo-charcoal;
+    @apply text-sm font-medium leading-5 text-kaleo-text;
   }
 
   .soft-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(16, 24, 39, 0.14), transparent);
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.42), rgba(255, 107, 107, 0.22), transparent);
   }
 
   .auth-field {
-    @apply w-full rounded-[1.2rem] border border-kaleo-charcoal/10 bg-white/70 px-4 py-3.5 text-sm text-kaleo-charcoal transition duration-300 outline-none placeholder:text-kaleo-charcoal/40 focus:border-kaleo-terracotta/40 focus:ring-4 focus:ring-kaleo-terracotta/10;
+    @apply w-full rounded-[1.2rem] border border-kaleo-border bg-kaleo-elevated px-4 py-3.5 text-sm text-kaleo-text transition duration-300 outline-none placeholder:text-kaleo-muted focus:border-kaleo-earth focus:ring-4 focus:ring-kaleo-earth/20;
   }
 
   .auth-field-icon {
-    @apply pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-kaleo-charcoal/40;
+    @apply pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-kaleo-muted;
   }
 
   .status-pill {
-    @apply inline-flex items-center gap-2 rounded-full border border-kaleo-charcoal/10 bg-kaleo-cream/90 px-3 py-1.5 text-xs font-medium text-kaleo-charcoal/60;
+    @apply inline-flex items-center gap-2 rounded-full border border-kaleo-border bg-kaleo-surface px-3 py-1.5 text-xs font-medium text-kaleo-text;
+  }
+
+  .workspace-surface {
+    position: relative;
+    isolation: isolate;
+    border: 1px solid rgba(44, 49, 66, 0.95);
+    background:
+      linear-gradient(180deg, rgba(30, 34, 48, 0.95), rgba(22, 24, 33, 0.9)),
+      radial-gradient(circle at top right, rgba(139, 92, 246, 0.12), transparent 42%),
+      radial-gradient(circle at bottom left, rgba(255, 107, 107, 0.08), transparent 34%);
+    backdrop-filter: blur(28px);
+    box-shadow:
+      0 42px 110px -58px rgba(0, 0, 0, 0.96),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .workspace-surface::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+  }
+
+  .workspace-surface-muted {
+    position: relative;
+    isolation: isolate;
+    border: 1px solid rgba(44, 49, 66, 0.9);
+    background:
+      linear-gradient(180deg, rgba(22, 24, 33, 0.92), rgba(13, 13, 18, 0.88)),
+      radial-gradient(circle at top, rgba(245, 158, 11, 0.08), transparent 42%);
+    backdrop-filter: blur(22px);
+    box-shadow:
+      0 34px 84px -54px rgba(0, 0, 0, 0.84),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .workspace-surface-muted::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    pointer-events: none;
+  }
+
+  .workspace-control {
+    transition:
+      border-color 220ms cubic-bezier(0.23, 1, 0.32, 1),
+      background-color 220ms cubic-bezier(0.23, 1, 0.32, 1),
+      box-shadow 220ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .workspace-control:hover {
+    border-color: rgba(139, 92, 246, 0.32);
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .workspace-control:focus {
+    border-color: rgba(139, 92, 246, 0.36);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.12);
   }
 }
 
@@ -278,8 +363,8 @@
 
   .card-hover:hover {
     transform: translateY(-6px);
-    border-color: rgba(16, 24, 39, 0.18);
-    box-shadow: 0 28px 46px -28px rgba(16, 24, 39, 0.45);
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 0 28px 46px -28px rgba(0, 0, 0, 0.58);
   }
 
   .fade-mask-bottom {
@@ -299,6 +384,18 @@
     animation: rotateSlow 18s linear infinite;
   }
 
+  .animate-ambient-drift {
+    animation: ambientDrift 16s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  }
+
+  .animate-ambient-drift-delayed {
+    animation: ambientDrift 18s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 2s;
+  }
+
+  .animate-rise-in {
+    animation: riseIn 720ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
   @keyframes floatSlow {
     0%,
     100% {
@@ -316,6 +413,45 @@
     to {
       transform: rotate(360deg);
     }
+  }
+
+  @keyframes ambientDrift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translate3d(10px, -16px, 0) scale(1.08);
+      opacity: 1;
+    }
+  }
+
+  @keyframes riseIn {
+    0% {
+      opacity: 0;
+      transform: translateY(18px) scale(0.985);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-delayed,
+  .animate-rotate-slow,
+  .animate-ambient-drift,
+  .animate-ambient-drift-delayed,
+  .animate-rise-in {
+    animation: none !important;
+  }
+
+  .card-hover,
+  .workspace-control {
+    transition: none !important;
   }
 }
 

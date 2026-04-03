@@ -13,7 +13,7 @@ import {
   LineChart,
   ShieldCheck,
 } from 'lucide-react';
-import ImpactMark from '../components/layout/ImpactMark';
+import CivicHubMark from '../components/layout/CivicHubMark';
 
 const heroStats = [
   { label: 'Domain agents', value: '04', detail: 'Education, health, sustainability, accessibility' },
@@ -72,7 +72,7 @@ const workflowSteps = [
   {
     title: 'Read the real context',
     description:
-      'Impact OS takes in source material, goals, and constraints instead of forcing users to rewrite their situation for each tool.',
+      'Civic Hub takes in source material, goals, and constraints instead of forcing users to rewrite their situation for each tool.',
     icon: Compass,
     accent: '#C56A43',
   },
@@ -179,12 +179,12 @@ export default function LandingPage() {
               AI that turns intent into structured, trackable impact.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-kaleo-charcoal/70 sm:text-xl">
-              Impact OS is a unified operating layer for education, wellness, sustainability, and accessibility. It organizes domain agents into one calm system people can actually return to.
+              Civic Hub is a unified operating layer for education, wellness, sustainability, and accessibility. It organizes domain agents into one calm system people can actually return to.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link to="/register" className="impact-button">
-                Launch Impact OS
+                Launch Civic Hub
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link to="/login" className="impact-button-secondary">
@@ -211,7 +211,7 @@ export default function LandingPage() {
 
               <div className="absolute left-1/2 top-1/2 z-10 flex h-36 w-36 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-kaleo-charcoal/10 bg-white/90 text-center shadow-[0_24px_46px_-28px_rgba(16,24,39,0.45)] backdrop-blur-xl">
                 <span className="section-kicker">Core System</span>
-                <span className="mt-2 font-serif text-3xl tracking-[-0.05em]">Impact OS</span>
+                <span className="mt-2 font-serif text-3xl tracking-[-0.05em]">Civic Hub</span>
                 <span className="mt-1 text-sm text-kaleo-charcoal/60">One profile, shared progress</span>
               </div>
 
@@ -414,7 +414,7 @@ export default function LandingPage() {
           <div className="overflow-hidden rounded-[2.25rem] bg-kaleo-charcoal px-7 py-8 text-white shadow-[0_32px_70px_-40px_rgba(16,24,39,0.72)] sm:px-10 sm:py-10">
             <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-end">
               <div>
-                <ImpactMark theme="light" />
+                <CivicHubMark theme="light" />
                 <h2 className="mt-8 max-w-3xl text-headline font-serif text-white">
                   Build a calmer, sharper frontend for social-good workflows.
                 </h2>
@@ -453,7 +453,7 @@ export default function LandingPage() {
 
             <div className="mt-10 soft-divider opacity-40" />
             <div className="mt-6 flex flex-col gap-2 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
-              <span>Impact OS repositions AI as operational infrastructure for people, not just content generation.</span>
+              <span>Civic Hub repositions AI as operational infrastructure for people, not just content generation.</span>
               <span className="inline-flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4" />
                 Purpose-built for structured follow-through

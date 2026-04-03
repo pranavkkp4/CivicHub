@@ -9,7 +9,7 @@ from .core.config import get_settings
 from .routes import (
     auth, dashboard, notifications, recommendations,
     education, healthcare, sustainability, accessibility,
-    agents, ml, admin
+    agents, ml, admin, email
 )
 
 settings = get_settings()
@@ -57,6 +57,7 @@ app.include_router(accessibility.router)
 app.include_router(agents.router)
 app.include_router(ml.router)
 app.include_router(admin.router)
+app.include_router(email.router)
 
 
 @app.get("/")

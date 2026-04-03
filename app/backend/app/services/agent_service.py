@@ -27,7 +27,7 @@ class AgentService:
         recent_test_scores = user_context.get('recent_test_scores', [])
         
         prompt = f"""
-You are the Education Agent for Impact OS. Analyze the user's learning context and provide personalized guidance.
+You are the Education Agent for Civic Hub. Analyze the user's learning context and provide personalized guidance.
 
 User Context:
 - Study materials: {study_materials_count}
@@ -79,7 +79,7 @@ Format as JSON with:
         wellness_goals = user_context.get('wellness_goals', [])
         
         prompt = f"""
-You are the Wellness Agent for Impact OS. Provide personalized wellness guidance.
+You are the Wellness Agent for Civic Hub. Provide personalized wellness guidance.
 
 User Context:
 - Active plans: {active_plans}
@@ -135,7 +135,7 @@ Format as JSON with:
         ])
         
         prompt = f"""
-You are the Sustainability Agent for Impact OS. Provide personalized eco guidance.
+You are the Sustainability Agent for Civic Hub. Provide personalized eco guidance.
 
 User Context:
 - Total eco actions: {total_actions}
@@ -186,7 +186,7 @@ Format as JSON with:
         preferred_language = user_context.get('preferred_language', 'en')
         
         prompt = f"""
-You are the Accessibility Agent for Impact OS. Help users make content more accessible.
+You are the Accessibility Agent for Civic Hub. Help users make content more accessible.
 
 User Context:
 - Preferred complexity: {preferred_complexity}
